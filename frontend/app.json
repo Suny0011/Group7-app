@@ -1,0 +1,29 @@
+{
+  "expo": {
+    "name": "Creative Media App",
+    "slug": "creative-media-app",
+    "version": "0.1.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTabletMode": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.creativemediaapp"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "scheme": "creativemediaapp",
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ]
+  }
+}
