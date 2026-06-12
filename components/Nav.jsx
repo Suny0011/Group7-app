@@ -19,6 +19,7 @@ export default function Nav({ authed = true }) {
             <Link href="/dashboard" className={is("/dashboard")}>Projects</Link>
             <Link href="/brief" className={is("/brief")}>New brief</Link>
             <Link href="/brand-kit" className={is("/brand-kit")}>Brand kit</Link>
+            <Link href="/pricing" className={is("/pricing")}>Upgrade</Link>
             <button
               className="btn btn-ghost"
               style={{ padding: "8px 14px" }}
@@ -29,6 +30,9 @@ export default function Nav({ authed = true }) {
           </nav>
         ) : (
           <nav className="nav-links">
+            <Link href="/services" className={is("/services")}>Services</Link>
+            <Link href="/pricing" className={is("/pricing")}>Pricing</Link>
+            <Link href="/contact" className={is("/contact")}>Contact</Link>
             <Link href="/login" className="btn btn-primary" style={{ padding: "9px 16px" }}>Sign in</Link>
           </nav>
         )}

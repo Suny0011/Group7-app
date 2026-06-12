@@ -54,3 +54,12 @@ npx cap init VividForge com.vividforge.app
 - The Gemini model defaults to `gemini-2.0-flash`. If Google changes model names,
   set `GEMINI_MODEL` in your env vars.
 - All AI calls go through `/api/generate` so the key never reaches the browser.
+
+## Assignment rubric coverage
+- **Disclaimer** — top bar on every page + footer: "for a class assignment and not for commercial purposes".
+- **ABN/ACN (temporary)** — shown in the global footer and on the Contact page.
+- **Contact Us page** — `/contact` with a form, business details, social links and a location map.
+- **Online payment (simulated)** — `/pricing` runs a simulated PayPal checkout (no real charge).
+- **List of services** — `/services` (full) and a preview section on the landing page.
+- **Marketing & promotion** — landing hero, how-it-works, social proof and CTAs.
+- **Bonus** — social media links (footer + contact), Google Maps location embed, branded graphics.

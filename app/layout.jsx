@@ -1,5 +1,7 @@
 import "./globals.css";
 import PWARegister from "@/components/PWARegister";
+import DisclaimerBar from "@/components/DisclaimerBar";
+import Footer from "@/components/Footer";
 
 export const metadata = {
   title: "VividForge — Digital media for business",
@@ -20,7 +22,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        {children}
+        <DisclaimerBar />
+        <div className="page-wrap">{children}</div>
+        <Footer />
         <PWARegister />
       </body>
     </html>
