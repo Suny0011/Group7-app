@@ -7,7 +7,8 @@ import {
   TouchableOpacity,
   StyleSheet,
   Image,
-  FlatList
+  FlatList,
+  ActivityIndicator
 } from 'react-native';
 
 const DashboardScreen = ({ navigation }) => {
@@ -20,9 +21,9 @@ const DashboardScreen = ({ navigation }) => {
 
   const fetchProjects = async () => {
     try {
-      const response = await fetch('http://localhost:3001/api/projects');
+      const response = await fetch('http://localhost:5000/api/projects');
       const data = await response.json();
-      setProjects(data);
+      setProjects(Array.isArray(data) ? data : []);
       setLoading(false);
     } catch (error) {
       console.error('Failed to fetch projects:', error);
@@ -48,7 +49,7 @@ const DashboardScreen = ({ navigation }) => {
 
       <View style={styles.cardFooter}>
         <View style={styles.mediaTypes}>
-          {item.mediaType.map(type => (
+          {item.mediaType && item.mediaType.map(type => (
             <View key={type} style={styles.mediaTag}>
               <Text style={styles.mediaTagText}>{type}</Text>
             </View>
@@ -70,6 +71,14 @@ const DashboardScreen = ({ navigation }) => {
     </TouchableOpacity>
   );
 
+  if (loading) {
+    return (
+      <View style={styles.centerContainer}>
+        <ActivityIndicator size="large" color="#3498DB" />
+      </View>
+    );
+  }
+
   return (
     <ScrollView style={styles.container}>
       {/* Header */}
@@ -81,15 +90,19 @@ const DashboardScreen = ({ navigation }) => {
       {/* Quick Stats */}
       <View style={styles.statsContainer}>
         <View style={styles.statCard}>
-          <Text style={styles.statNumber}>5</Text>
-          <Text style={styles.statLabel}>Active Projects</Text>
+          <Text style={styles.statNumber}>{projects.length}</Text>
+          <Text style={styles.statLabel}>Total Projects</Text>
         </View>
         <View style={styles.statCard}>
-          <Text style={styles.statNumber}>12</Text>
+          <Text style={styles.statNumber}>
+            {projects.reduce((sum, p) => sum + (p.assets ? p.assets.length : 0), 0)}
+          </Text>
           <Text style={styles.statLabel}>Assets Created</Text>
         </View>
         <View style={styles.statCard}>
-          <Text style={styles.statNumber}>3</Text>
+          <Text style={styles.statNumber}>
+            {projects.filter(p => p.status === 'published').length}
+          </Text>
           <Text style={styles.statLabel}>Published</Text>
         </View>
       </View>
@@ -97,12 +110,18 @@ const DashboardScreen = ({ navigation }) => {
       {/* Projects Section */}
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Your Projects</Text>
-        <FlatList
-          scrollEnabled={false}
-          data={projects}
-          renderItem={renderProjectCard}
-          keyExtractor={item => item.id.toString()}
-        />
+        {projects.length > 0 ? (
+          <FlatList
+            scrollEnabled={false}
+            data={projects}
+            renderItem={renderProjectCard}
+            keyExtractor={item => item.id.toString()}
+          />
+        ) : (
+          <View style={styles.emptyContainer}>
+            <Text style={styles.emptyText}>No projects yet. Create one to get started!</Text>
+          </View>
+        )}
       </View>
 
       {/* Call to Action */}
@@ -128,13 +147,20 @@ const getStatusColor = (status) => {
 };
 
 const getProgressPercentage = (project) => {
+  if (!project.assets || project.assets.length === 0) return 0;
   const completed = project.assets.filter(a => a.status === 'approved').length;
-  return project.assets.length > 0 ? (completed / project.assets.length) * 100 : 0;
+  return (completed / project.assets.length) * 100;
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#F8F9FA'
+  },
+  centerContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
     backgroundColor: '#F8F9FA'
   },
   header: {
@@ -263,6 +289,15 @@ const styles = StyleSheet.create({
     height: '100%',
     backgroundColor: '#2ECC71',
     borderRadius: 3
+  },
+  emptyContainer: {
+    alignItems: 'center',
+    paddingVertical: 40
+  },
+  emptyText: {
+    fontSize: 14,
+    color: '#95A5A6',
+    textAlign: 'center'
   },
   ctaButton: {
     backgroundColor: '#3498DB',
