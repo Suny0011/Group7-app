@@ -32,7 +32,7 @@ const AICoCreationScreen = ({ route, navigation }) => {
 
     setLoading(true);
     try {
-      const response = await fetch('http://localhost:5000/api/ai/generate-image', {
+      const response = await fetch('http://localhost:3001/api/ai/generate-image', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ prompt, style })
@@ -58,7 +58,7 @@ const AICoCreationScreen = ({ route, navigation }) => {
 
     setLoading(true);
     try {
-      const response = await fetch('http://localhost:5000/api/ai/generate-video', {
+      const response = await fetch('http://localhost:3001/api/ai/generate-video', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ script: prompt, style, duration: 30 })
