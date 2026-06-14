@@ -1,18 +1,16 @@
 "use client";
 import { useState } from "react";
 import Nav from "@/components/Nav";
+import { Icon } from "@/lib/icons";
 import { BUSINESS, SOCIALS } from "@/lib/business";
 
 export default function Contact() {
   const [sent, setSent] = useState(false);
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const set = (k) => (e) => setForm({ ...form, [k]: e.target.value });
-  const mapSrc = `https://maps.google.com/maps?q=${encodeURIComponent(BUSINESS.mapQuery)}&t=&z=15&ie=UTF8&iwloc=&output=embed`;
+  const mapSrc = `https://maps.google.com/maps?q=${encodeURIComponent(BUSINESS.mapQuery)}&t=&z=15&hl=en&ie=UTF8&iwloc=&output=embed`;
 
-  function submit(e) {
-    e.preventDefault();
-    setSent(true); // demo only — no message is actually sent
-  }
+  function submit(e) { e.preventDefault(); setSent(true); }
 
   return (
     <>
@@ -23,11 +21,10 @@ export default function Contact() {
         <p className="lead" style={{ maxWidth: 560 }}>Questions about VividForge? Send us a note and we’ll get back to you.</p>
 
         <div className="grid grid-2" style={{ marginTop: 24, alignItems: "start" }}>
-          {/* form */}
           <div className="card card-pad">
             {sent ? (
               <div className="center fade" style={{ padding: "20px 0" }}>
-                <div className="spark" style={{ background: "#E9FBF7", color: "#0E8F7E", margin: "0 auto 12px", width: 50, height: 50, fontSize: 26 }}>✓</div>
+                <div className="spark" style={{ background: "#E9FBF7", color: "#0E8F7E", margin: "0 auto 12px", width: 50, height: 50, fontSize: 24 }}><Icon name="check" /></div>
                 <h2 className="h2" style={{ fontSize: 20 }}>Thanks, {form.name || "there"}!</h2>
                 <p className="muted">Your message has been received (demo). We’ll reply to {form.email || "your email"} soon.</p>
                 <button className="btn btn-ghost" onClick={() => { setSent(false); setForm({ name: "", email: "", message: "" }); }}>Send another</button>
@@ -52,32 +49,23 @@ export default function Contact() {
             )}
           </div>
 
-          {/* details + map */}
           <div>
             <div className="card card-pad" style={{ marginBottom: 16 }}>
               <h2 className="h2" style={{ fontSize: 18 }}>{BUSINESS.name}</h2>
-              <p className="footer-line" style={{ color: "var(--ink)" }}>📍 {BUSINESS.address}</p>
-              <p className="footer-line" style={{ color: "var(--ink)" }}>✉️ <a href={`mailto:${BUSINESS.email}`}>{BUSINESS.email}</a></p>
-              <p className="footer-line" style={{ color: "var(--ink)" }}>📞 {BUSINESS.phone}</p>
+              <p className="footer-line info" style={{ color: "var(--ink)" }}><Icon name="location" /> {BUSINESS.address}</p>
+              <p className="footer-line info" style={{ color: "var(--ink)" }}><Icon name="email" /> <a href={`mailto:${BUSINESS.email}`}>{BUSINESS.email}</a></p>
+              <p className="footer-line info" style={{ color: "var(--ink)" }}><Icon name="phone" /> {BUSINESS.phone}</p>
               <div className="divider" />
               <p className="footer-line" style={{ color: "var(--mute)" }}>ABN: {BUSINESS.abn} <span className="temp">(temporary)</span></p>
               <p className="footer-line" style={{ color: "var(--mute)" }}>ACN: {BUSINESS.acn} <span className="temp">(temporary)</span></p>
-              <div className="socials" style={{ marginTop: 12 }}>
+              <div className="socials dark-icons" style={{ marginTop: 12 }}>
                 {SOCIALS.map((s) => (
-                  <a key={s.name} href={s.href} target="_blank" rel="noopener noreferrer" title={s.name} style={{ background: "#ECEEF7" }}>{s.icon}</a>
+                  <a key={s.name} href={s.href} target="_blank" rel="noopener noreferrer" title={s.name}><Icon name={s.icon} /></a>
                 ))}
               </div>
             </div>
             <div className="map-wrap">
-              <iframe
-                title="VividForge location"
-                src={mapSrc}
-                width="100%"
-                height="260"
-                style={{ border: 0, display: "block" }}
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-              />
+              <iframe title="VividForge location" src={mapSrc} width="100%" height="260" style={{ border: 0, display: "block" }} loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
             </div>
           </div>
         </div>

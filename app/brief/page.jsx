@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Nav from "@/components/Nav";
 import { getUser, saveProject, getBrandKit, uid } from "@/lib/store";
+import { Icon } from "@/lib/icons";
 
 const PLATFORMS = ["Instagram", "TikTok", "LinkedIn", "Facebook", "YouTube"];
 const TONES = ["Energetic & playful", "Warm & friendly", "Premium & polished", "Bold & direct"];
@@ -93,7 +94,7 @@ export default function Brief() {
           {error && <p style={{ color: "#C00", fontSize: 14, marginTop: 4 }}>{error}</p>}
 
           <button className="btn btn-primary btn-block" disabled={loading} style={{ marginTop: 6 }}>
-            {loading ? <><span className="spin" /> Drafting your media…</> : "Generate media ⚡"}
+            {loading ? <><span className="spin" /> Drafting your media…</> : <><Icon name="magic" /> Generate media</>}
           </button>
         </form>
       </main>

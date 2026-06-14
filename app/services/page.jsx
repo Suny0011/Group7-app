@@ -1,7 +1,8 @@
 "use client";
 import Link from "next/link";
 import Nav from "@/components/Nav";
-import { SERVICES } from "@/lib/business";
+import { Icon } from "@/lib/icons";
+import { SERVICES, ROADMAP } from "@/lib/business";
 
 export default function Services() {
   return (
@@ -16,17 +17,33 @@ export default function Services() {
           get publish-ready media in minutes.
         </p>
 
-        <section className="grid grid-3" style={{ marginTop: 26 }}>
+        <h2 className="h2" style={{ fontSize: 20, color: "#E84A5D", marginTop: 26 }}>Available Today</h2>
+        <section className="grid grid-3" style={{ marginTop: 12 }}>
           {SERVICES.map((s) => (
             <div className="card" key={s.title}>
-              <div className="spark" style={{ background: "#ECEEF7", color: "#12173A", fontSize: 20 }}>{s.icon}</div>
-              <h2 className="h2" style={{ fontSize: 18, marginTop: 12 }}>{s.title}</h2>
-              <p className="muted" style={{ margin: 0 }}>{s.desc}</p>
+              <div className="spark" style={{ background: "#ffffff", color: "#E84A5D", fontSize: 20 }}><Icon name={s.icon} /></div>
+              <h3 style={{ fontSize: 20, margin: "12px 0 4px", color: "var(--navy)" }}>{s.title}</h3>
+              <p className="muted" style={{ margin: 0, fontSize: 14 }}>{s.desc}</p>
             </div>
           ))}
         </section>
 
-        <section className="card card-pad" style={{ marginTop: 26, background: "var(--navy)", color: "#fff", border: "none" }}>
+        <h2 className="h2" style={{ fontSize: 20, color: "#C77700", marginTop: 32 }}>Coming next</h2>
+        <p className="muted" style={{ marginTop: 0 }}>Where VividForge is heading — from a generator into a full social studio.</p>
+        <section className="grid grid-3" style={{ marginTop: 12 }}>
+          {ROADMAP.map((s) => (
+            <div className="card" key={s.title}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <div className="spark" style={{ background: "#FFF4E8", color: "#C77700", fontSize: 20 }}><Icon name={s.icon} /></div>
+                <span className="pill pill-soon">{s.tag}</span>
+              </div>
+              <h3 style={{ fontSize: 20, margin: "12px 0 4px", color: "var(--navy)" }}>{s.title}</h3>
+              <p className="muted" style={{ margin: 0, fontSize: 14 }}>{s.desc}</p>
+            </div>
+          ))}
+        </section>
+
+        <section className="card card-pad" style={{ marginTop: 28, background: "var(--navy)", color: "#fff", border: "none" }}>
           <div className="grid grid-2" style={{ alignItems: "center" }}>
             <div>
               <span className="eyebrow" style={{ color: "#FF8A97" }}>Why it works</span>

@@ -1,19 +1,19 @@
 import Link from "next/link";
 import { BUSINESS, SOCIALS } from "@/lib/business";
+import { Icon } from "@/lib/icons";
+import Logo from "@/components/Logo";
 
 export default function Footer() {
   return (
     <footer className="footer">
       <div className="container footer-grid">
         <div>
-          <div className="brand" style={{ color: "#fff" }}>
-            <span className="spark">⚡</span> VividForge
-          </div>
+          <Logo dark />
           <p className="footer-tag">Agency-quality digital media at self-service speed and price.</p>
           <div className="socials">
             {SOCIALS.map((s) => (
               <a key={s.name} href={s.href} target="_blank" rel="noopener noreferrer" aria-label={s.name} title={s.name}>
-                {s.icon}
+                <Icon name={s.icon} />
               </a>
             ))}
           </div>

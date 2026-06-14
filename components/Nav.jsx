@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { logout } from "@/lib/store";
+import Logo from "@/components/Logo";
 
 export default function Nav({ authed = true }) {
   const path = usePathname();
@@ -11,22 +12,15 @@ export default function Nav({ authed = true }) {
   return (
     <header className="nav">
       <div className="container nav-inner">
-        <Link href={authed ? "/dashboard" : "/"} className="brand">
-          <span className="spark">⚡</span> VividForge
-        </Link>
+        <Link href={authed ? "/dashboard" : "/"} className="brand"><Logo /></Link>
         {authed ? (
           <nav className="nav-links">
             <Link href="/dashboard" className={is("/dashboard")}>Projects</Link>
-            <Link href="/brief" className={is("/brief")}>New brief</Link>
+            <Link href="/calendar" className={is("/calendar")}>Calendar</Link>
+            <Link href="/analytics" className={is("/analytics")}>Analytics</Link>
             <Link href="/brand-kit" className={is("/brand-kit")}>Brand kit</Link>
-            <Link href="/pricing" className={is("/pricing")}>Upgrade</Link>
-            <button
-              className="btn btn-ghost"
-              style={{ padding: "8px 14px" }}
-              onClick={() => { logout(); router.push("/login"); }}
-            >
-              Sign out
-            </button>
+            <Link href="/brief" className="btn btn-primary" style={{ padding: "9px 16px" }}>+ New brief</Link>
+            <button className="btn btn-ghost" style={{ padding: "8px 14px" }} onClick={() => { logout(); router.push("/login"); }}>Sign out</button>
           </nav>
         ) : (
           <nav className="nav-links">

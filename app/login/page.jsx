@@ -6,12 +6,13 @@ import { setUser } from "@/lib/store";
 
 export default function Login() {
   const router = useRouter();
-  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   function signIn(e) {
     e.preventDefault();
-    setUser({ name: name.trim() || "Founder", email: email.trim(), since: Date.now() });
+    // Demo only: the password is never stored or checked.
+    setUser({ email: email.trim() || "founder@business.com.au", since: Date.now() });
     router.push("/dashboard");
   }
 
@@ -25,17 +26,17 @@ export default function Login() {
           <p className="muted" style={{ marginTop: 0 }}>This demo signs you in instantly — no password needed.</p>
           <form onSubmit={signIn} style={{ marginTop: 18 }}>
             <div className="field">
-              <label className="label" htmlFor="n">Your name</label>
-              <input id="n" className="input" value={name} onChange={(e) => setName(e.target.value)} placeholder="Alex Founder" />
+              <label className="label" htmlFor="e">Email</label>
+              <input id="e" className="input" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="alex@business.com.au" required />
             </div>
             <div className="field">
-              <label className="label" htmlFor="e">Email</label>
-              <input id="e" className="input" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="alex@business.com.au" />
+              <label className="label" htmlFor="p">Password</label>
+              <input id="p" className="input" type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="••••••••" required />
             </div>
             <button className="btn btn-primary btn-block" type="submit">Continue</button>
           </form>
           <p className="muted" style={{ fontSize: 12, marginTop: 14, marginBottom: 0 }}>
-            Demo auth stores your name locally. Connect Supabase for real accounts.
+            Demo sign-in — your password isn’t stored or checked. Connect Supabase for real accounts.
           </p>
         </div>
       </main>

@@ -2,6 +2,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import Nav from "@/components/Nav";
+import { Icon } from "@/lib/icons";
 
 const PLANS = [
   { id: "starter", name: "Starter", price: 0, period: "free", tagline: "Try the core workflow",
@@ -95,7 +96,7 @@ export default function Pricing() {
             )}
             {stage === "done" && (
               <div className="center fade">
-                <div className="spark" style={{ background: "#E9FBF7", color: "#0E8F7E", margin: "0 auto 12px", width: 50, height: 50, fontSize: 26 }}>✓</div>
+                <div className="spark" style={{ background: "#E9FBF7", color: "#0E8F7E", margin: "0 auto 12px", width: 50, height: 50, fontSize: 24 }}><Icon name="check" /></div>
                 <h2 className="h2" style={{ fontSize: 20 }}>Payment successful</h2>
                 <p className="muted">Your <strong>{checkout.name}</strong> plan is active (demo).<br />Reference: <strong>{ref}</strong></p>
                 <Link href="/login" className="btn btn-primary btn-block" style={{ marginTop: 10 }}>Go to the app</Link>

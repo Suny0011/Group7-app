@@ -1,21 +1,22 @@
 "use client";
 import Link from "next/link";
 import Nav from "@/components/Nav";
-import { SERVICES } from "@/lib/business";
+import { Icon } from "@/lib/icons";
+import { SERVICES, ROADMAP } from "@/lib/business";
 
 export default function Home() {
   return (
     <>
       <Nav authed={false} />
       <main className="container" style={{ paddingTop: 28, paddingBottom: 56 }}>
-        {/* HERO — problem + core value proposition */}
+        {/* HERO */}
         <section className="hero fade">
           <div className="blob" style={{ width: 260, height: 260, background: "#FF5B6E", top: -90, right: -60 }} />
           <div className="blob" style={{ width: 200, height: 200, background: "#27C4B0", bottom: -80, right: 120 }} />
           <div style={{ position: "relative", maxWidth: 660 }}>
             <span className="eyebrow" style={{ color: "#FF8A97" }}>Digital media services for business</span>
             <h1 className="h1">Every business has a story. Most have <span style={{ color: "#FF5B6E" }}>no time</span> to tell it.</h1>
-            <p className="lead">VividForge turns a quick brief into agency-quality social posts, captions, and video scripts — in minutes, not weeks. One tool, one flat price.</p>
+            <p className="lead">VividForge turns a quick brief into agency-quality posts, captions, and video scripts — then helps you schedule and publish them. One tool, one flat price.</p>
             <div className="row" style={{ marginTop: 22 }}>
               <Link href="/login" className="btn btn-primary">Start creating free</Link>
               <Link href="/pricing" className="btn btn-ghost" style={{ background: "rgba(255,255,255,.12)", color: "#fff" }}>See pricing</Link>
@@ -23,30 +24,30 @@ export default function Home() {
           </div>
         </section>
 
-        {/* CORE VALUE — three pillars */}
+        {/* VALUE PILLARS */}
         <section className="grid grid-3" style={{ marginTop: 28 }}>
           {[
-            ["⚡", "Built for speed", "Brief in, first draft out in under a minute."],
-            ["💸", "Predictable price", "One flat subscription — no agency surprises."],
-            ["🎨", "Always on-brand", "Reuse your colours, tone, and tagline every time."],
+            ["speed", "Built for speed", "Brief in, first draft out in under a minute."],
+            ["price", "Predictable price", "One flat subscription — no agency surprises."],
+            ["brand", "Always on-brand", "Reuse your colours, tone, and tagline every time."],
           ].map(([ic, t, d]) => (
             <div className="card" key={t}>
-              <div className="spark" style={{ background: "#ECEEF7", color: "#12173A", fontSize: 18 }}>{ic}</div>
+              <div className="spark" style={{ background: "#ffffff", color: "#12173A", fontSize: 18 }}><Icon name={ic} /></div>
               <h2 className="h2" style={{ fontSize: 18, marginTop: 12 }}>{t}</h2>
               <p className="muted" style={{ margin: 0 }}>{d}</p>
             </div>
           ))}
         </section>
 
-        {/* HOW IT WORKS — information flow */}
+        {/* HOW IT WORKS */}
         <section className="card card-pad" style={{ marginTop: 28 }}>
           <span className="eyebrow">How it works</span>
-          <h2 className="h2" style={{ fontSize: 24 }}>From idea to post in three steps</h2>
+          <h2 className="h2" style={{ fontSize: 24 }}>From idea to published post</h2>
           <div className="grid grid-3" style={{ marginTop: 14 }}>
             {[
               ["1", "Brief it", "Tell us your business, goal, platform and tone."],
               ["2", "Generate", "AI drafts a headline, caption, hashtags and a video script."],
-              ["3", "Publish", "Copy, tweak, and post — or hand off to a human creator."],
+              ["3", "Schedule & publish", "Drop it on your calendar and post — or send to a creator."],
             ].map(([n, t, d]) => (
               <div key={n} className="step">
                 <span className="step-num">{n}</span>
@@ -56,7 +57,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* SERVICES preview — marketing + list */}
+        {/* SERVICES */}
         <section style={{ marginTop: 32 }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", flexWrap: "wrap", gap: 8 }}>
             <div>
@@ -66,10 +67,28 @@ export default function Home() {
             <Link href="/services" className="muted" style={{ fontWeight: 700 }}>All services →</Link>
           </div>
           <div className="grid grid-3" style={{ marginTop: 14 }}>
-            {SERVICES.slice(0, 6).map((s) => (
+            {SERVICES.map((s) => (
               <div className="card" key={s.title}>
-                <div style={{ fontSize: 24 }}>{s.icon}</div>
-                <h3 style={{ margin: "8px 0 4px", fontSize: 16, color: "var(--navy)" }}>{s.title}</h3>
+                <div className="spark" style={{ background: "#ffffff", color: "#E84A5D", fontSize: 16 }}><Icon name={s.icon} /></div>
+                <h3 style={{ margin: "10px 0 4px", fontSize: 16, color: "var(--navy)" }}>{s.title}</h3>
+                <p className="muted" style={{ margin: 0, fontSize: 14 }}>{s.desc}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* ROADMAP — more than a generator */}
+        <section style={{ marginTop: 32 }}>
+          <span className="eyebrow">More than a generator</span>
+          <h2 className="h2" style={{ fontSize: 24 }}>A studio that grows with you</h2>
+          <div className="grid grid-3" style={{ marginTop: 14 }}>
+            {ROADMAP.slice(0, 3).map((s) => (
+              <div className="card" key={s.title}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <div className="spark" style={{ background: "#FFF4E8", color: "#C77700", fontSize: 16 }}><Icon name={s.icon} /></div>
+                  <span className="pill pill-soon">{s.tag}</span>
+                </div>
+                <h3 style={{ margin: "10px 0 4px", fontSize: 16, color: "var(--navy)" }}>{s.title}</h3>
                 <p className="muted" style={{ margin: 0, fontSize: 14 }}>{s.desc}</p>
               </div>
             ))}
