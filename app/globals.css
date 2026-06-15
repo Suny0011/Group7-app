@@ -113,7 +113,7 @@ button { font-family: inherit; cursor: pointer; }
 .outpiece h3 { margin: 0 0 6px; font-size: 14px; color: var(--coral); letter-spacing: .5px; text-transform: uppercase; }
 .copybtn { font-size: 12px; font-weight: 700; color: var(--teal); background: none; border: none; padding: 0; }
 
-/* ===== Assignment additions ===== */
+/* ===== Additions ===== */
 .page-wrap { min-height: 60vh; }
 
 /* disclaimer bar */
@@ -181,7 +181,7 @@ button { font-family: inherit; cursor: pointer; }
 /* map */
 .map-wrap { border-radius: 16px; overflow: hidden; border: 1px solid var(--line); box-shadow: var(--shadow-sm); }
 
-/* ===== v2: logo, features, calendar, analytics ===== */
+/* ===== v2 ===== */
 /* logo */
 .logo { display: inline-flex; align-items: center; gap: 10px; }
 .logo-badge { width: 32px; height: 32px; border-radius: 9px; background: var(--coral); color: #fff; display: grid; place-items: center; font-size: 16px; box-shadow: 0 4px 12px rgba(255,91,110,.35); }

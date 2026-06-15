@@ -2,20 +2,13 @@
 
 A Next.js web app + installable PWA where small businesses brief a campaign and
 get AI-drafted social media (headline, caption, hashtags, video script).
-Built to deploy on **Vercel** with the AI key kept safely server-side.
+Built to deploy on Vercel with the AI key kept safely server-side.
 
-## Screens
-- `/` Landing
-- `/login` Demo sign-in (no password)
-- `/dashboard` Saved projects
-- `/brief` New brief wizard → calls the AI
-- `/result/[id]` Generated media
-- `/brand-kit` Reusable brand details
 
 ## Run locally
 ```bash
 npm install
-cp .env.example .env.local      # then paste your Gemini key
+cp .env.example .env.local      # then paste the Gemini key
 npm run dev                     # http://localhost:3000
 ```
 
@@ -55,11 +48,3 @@ npx cap init VividForge com.vividforge.app
   set `GEMINI_MODEL` in your env vars.
 - All AI calls go through `/api/generate` so the key never reaches the browser.
 
-## Assignment rubric coverage
-- **Disclaimer** — top bar on every page + footer: "for a class assignment and not for commercial purposes".
-- **ABN/ACN (temporary)** — shown in the global footer and on the Contact page.
-- **Contact Us page** — `/contact` with a form, business details, social links and a location map.
-- **Online payment (simulated)** — `/pricing` runs a simulated PayPal checkout (no real charge).
-- **List of services** — `/services` (full) and a preview section on the landing page.
-- **Marketing & promotion** — landing hero, how-it-works, social proof and CTAs.
-- **Bonus** — social media links (footer + contact), Google Maps location embed, branded graphics.
