@@ -5,12 +5,14 @@ import { useRouter } from "next/navigation";
 import Nav from "@/components/Nav";
 import { Icon } from "@/lib/icons";
 import { getUser, getProjects, deleteProject, getSchedule } from "@/lib/store";
+import { getUser, getProjects, deleteProject, getSchedule, getPending } from "@/lib/store";
 
 export default function Dashboard() {
   const router = useRouter();
   const [user, setUser] = useState(null);
   const [projects, setProjects] = useState([]);
   const [scheduled, setScheduled] = useState(0);
+  const [pending, setPending] = useState(0);
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
@@ -19,6 +21,7 @@ export default function Dashboard() {
     setUser(u);
     setProjects(getProjects());
     setScheduled(getSchedule().length);
+    setPending(getPending().length);
     setReady(true);
   }, [router]);
 
@@ -37,7 +40,15 @@ export default function Dashboard() {
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", flexWrap: "wrap", gap: 12 }}>
           <div>
             <span className="eyebrow">Your studio</span>
+            {pending > 0 && (
+          <div style={{ background: "#EFF3FF", border: "1px solid #D6E0FF", color: "#2A3A7A", padding: "11px 14px", borderRadius: "12px", fontSize: "13px", marginBottom: "16px", fontWeight: "600" }}>
+            ⏳ {pending} draft{pending === 1 ? "" : "s"} waiting to sync
+          </div>
+        )}
+
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", flexWrap: "wrap", gap: 12 }}>
             <h1 className="h2" style={{ fontSize: 28, marginTop: 6 }}>Hi {firstName}, ready to create?</h1>
+            
           </div>
           <Link href="/brief" className="btn btn-primary">+ New brief</Link>
         </div>
