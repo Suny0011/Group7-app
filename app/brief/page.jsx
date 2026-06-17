@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Nav from "@/components/Nav";
-import { getUser, saveProject, getBrandKit, uid } from "@/lib/store";
+import { getUser, saveProject, getBrandKit, uid, getPending, addPending, updatePending, removePending } from "@/lib/store";
 import { Icon } from "@/lib/icons";
 
 const PLATFORMS = ["Instagram", "TikTok", "LinkedIn", "Facebook", "YouTube"];
@@ -14,15 +14,46 @@ export default function Brief() {
   const [form, setForm] = useState({ businessName: "", industry: "", goal: "", platform: "Instagram", tone: "Energetic & playful" });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [online, setOnline] = useState(true);
+  const [pendingCount, setPendingCount] = useState(0);
 
-  useEffect(() => {
+ useEffect(() => {
     if (!getUser()) { router.replace("/login"); return; }
     const kit = getBrandKit();
     setForm((f) => ({ ...f, businessName: kit.name || "", tone: kit.tone || f.tone }));
-    setReady(true);
+    setOnline(navigator.onLine);
+    setPendingCount(getPending().length);
+    
+    const handleOnline = () => {
+      setOnline(true);
+      syncPendingActions();
+    };
+    window.addEventListener("online", handleOnline);
+    return () => window.removeEventListener("online", handleOnline);
   }, [router]);
 
   const set = (k) => (e) => setForm({ ...form, [k]: e.target.value });
+
+  async function syncPendingActions() {
+    const pending = getPending();
+    for (const p of pending) {
+      try {
+        const res = await fetch("/api/generate", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(p.data),
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error);
+        const project = { id: uid(), ...p.data, result: data.result, created: Date.now() };
+        saveProject(project);
+        removePending(p.id);
+        setPendingCount(getPending().length);
+      } catch (err) {
+        updatePending(p.id, "pending");
+      }
+    }
+  }
 
   async function generate(e) {
     e.preventDefault();
@@ -31,6 +62,16 @@ export default function Brief() {
       setError("Add your industry and campaign goal so the AI has something to work with.");
       return;
     }
+    
+    // If offline, save to pending
+    if (!online) {
+      addPending({ action: "generate", data: form });
+      setPendingCount(getPending().length);
+      setForm({ businessName: form.businessName, industry: "", goal: "", platform: "Instagram", tone: form.tone });
+      setError("📡 You're offline. This brief will sync when you reconnect.");
+      return;
+    }
+
     setLoading(true);
     try {
       const res = await fetch("/api/generate", {
@@ -55,6 +96,11 @@ export default function Brief() {
     <>
       <Nav />
       <main className="container shell fade" style={{ paddingTop: 28, paddingBottom: 60 }}>
+        {!online && (
+          <div style={{ background: "#FFF4E8", border: "1px solid #F59E0B", color: "#92400E", padding: "11px 14px", borderRadius: "12px", fontSize: "13px", marginTop: "14px", fontWeight: "600" }}>
+            📡 You're offline. Drafts will be generated when you reconnect. {pendingCount > 0 && `(${pendingCount} waiting)`}
+          </div>
+        )]
         <span className="eyebrow">New brief</span>
         <h1 className="h2" style={{ fontSize: 28, marginTop: 6 }}>Tell us about the campaign</h1>
         <p className="muted" style={{ marginTop: 0 }}>VividForge drafts a headline, caption, hashtags, and a short video script.</p>
